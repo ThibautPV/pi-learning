@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Pi (π) - Learn the first 100 decimal places of Pi</title>
+    <meta name="description" content="Easily learn the first 100 decimal places of the number Pi (π)">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <style>
+        .icon {
+            background-color: #209CEE;
+        }
+
+        a {
+            color: #209CEE;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container my-5">
+    <div class="row bg-body-tertiary position-relative p-5 text-center text-muted bg-body border border-dashed rounded-5">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1><span class="icon badge">π</span> Learn the decimals of Pi</h1>
+            <!-- Toggle switch for hint -->
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="hintSwitch" onclick="toggleHint()">
+                <label class="form-check-label" for="hintSwitch">Toggle Hint</label>
+            </div>
+        </div>
+        <div class="col mt-4">
+            <!-- Input for PI -->
+            <div class="input-group mb-3">
+                <span class="input-group-text fs-5">3.</span>
+                <input class="form-control form-control-lg" type="text" id="piInput" placeholder="Enter the decimals of π" onkeyup="checkPi()" />
+            </div>
+            <!-- Hint display for Pi -->
+            <div class="alert alert-primary text-muted fs-5 mb-0 d-none" id="piHint"></div>
+            <!-- Feedback on the PI input -->
+            <div id="feedback" class="form-text fs-5 pt-3"></div>
+            <!-- Counter for correctly entered decimals -->
+            <p class="fs-5 pt-3">Correctly entered decimals: <span id="counter" class="badge bg-secondary">0</span></p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="d-flex justify-content-between">
+                <p>Made with ❤️ by <a href="https://github.com/ThibautPV/" target="_blank">Thibaut</a> with HTML, Javascript, Bootstrap & ChatGPT</p>
+                <span>v1.0.0</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Javascript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+    // Store the PI decimals for validation
+    const PI_DECIMALS = "1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679";
+
+    /**
+     * Check if the entered PI decimals are correct.
+     */
+    function checkPi() {
+        const inputElem = document.getElementById('piInput');
+        const feedbackElem = document.getElementById('feedback');
+        const counterElem = document.getElementById('counter');
+        const piHintElem = document.getElementById('piHint');
+
+        const inputVal = inputElem.value;
+
+        // Validate the input against PI decimals
+        if (PI_DECIMALS.substring(0, inputVal.length) === inputVal) {
+            counterElem.textContent = inputVal.length;
+
+            // Adjust classes for valid input
+            inputElem.classList.remove("is-invalid");
+            inputElem.classList.add("is-valid");
+            feedbackElem.classList.remove("text-danger");
+            feedbackElem.classList.add("text-success");
+            feedbackElem.textContent = "Well done! Keep going!";
+
+            // Show hint for next PI decimals
+            piHintElem.textContent = "..." + PI_DECIMALS.substring(inputVal.length);
+
+            // All decimals entered correctly
+            if (inputVal.length === PI_DECIMALS.length) {
+                feedbackElem.textContent = "Congratulations! You've entered all the provided decimals!";
+            }
+        } else {
+            // Adjust classes for invalid input
+            inputElem.classList.remove("is-valid");
+            inputElem.classList.add("is-invalid");
+            feedbackElem.classList.remove("text-success");
+            feedbackElem.classList.add("text-danger");
+            feedbackElem.textContent = "Oops, that seems to be a mistake. Try again.";
+
+            // Show hint for the correct PI decimals
+            piHintElem.textContent = PI_DECIMALS.substring(inputVal.length);
+        }
+    }
+
+    /**
+     * Toggle the visibility of the PI hint.
+     */
+    function toggleHint() {
+        const piHintElem = document.getElementById('piHint');
+        if (piHintElem.classList.contains('d-none')) {
+            piHintElem.classList.remove('d-none');
+        } else {
+            piHintElem.classList.add('d-none');
+        }
+    }
+
+</script>
+
+</body>
+
+</html>
