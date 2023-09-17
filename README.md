@@ -5,6 +5,7 @@
 - [Overview / Aperçu](#overview--aperçu)
 - [Installation](#installation)
 - [Usage / Utilisation](#usage--utilisation)
+- [Demonstration](#demonstration)
 - [Contribution](#contribution)
 - [License / Licence](#license--licence)
 
@@ -45,6 +46,10 @@ git clone https://github.com/ThibautPV/pi-learning.git
 2. Recevez des retours en temps réel sur votre saisie. L'outil vous indiquera si vous avez juste ou non.
 3. Utilisez le bouton à bascule pour afficher/masquer les indices.
 4. Bonne maîtrise de π !
+
+## Demonstration
+
+https://thibautpv.github.io/pi-learning/
 
 ## Contribution
 
