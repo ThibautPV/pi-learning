@@ -65,7 +65,7 @@
         <div class="col">
             <div class="d-flex justify-content-between">
                 <p>Made with ❤️ by <a href="https://github.com/ThibautPV/" target="_blank">Thibaut</a> with HTML, Javascript, Bootstrap & ChatGPT</p>
-                <span>v1.0.0</span>
+                <span>v1.0.1</span>
             </div>
         </div>
     </div>
@@ -89,6 +89,12 @@
         const piHintElem = document.getElementById('piHint');
 
         const inputVal = inputElem.value;
+
+        // Check if the input is empty
+        if (inputVal === '') {
+            feedbackElem.textContent = ''; // clear feedback message
+            return; // exit the function
+        }
 
         // Validate the input against PI decimals
         if (PI_DECIMALS.substring(0, inputVal.length) === inputVal) {
@@ -132,6 +138,13 @@
             piHintElem.classList.add('d-none');
         }
     }
+
+    /**
+     * Focus to the input element when the page loads
+     */
+    window.onload = function() {
+        document.getElementById('piInput').focus();
+    };
 
 </script>
 
