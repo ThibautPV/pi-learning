@@ -48,7 +48,7 @@
             <!-- Input for PI -->
             <div class="input-group mb-3">
                 <span class="input-group-text fs-5">3.</span>
-                <input class="form-control form-control-lg" type="text" id="piInput" placeholder="Enter the decimals of π" onkeyup="checkPi()" />
+                <input class="form-control form-control-lg" type="text" id="piInput" placeholder="Enter the decimals of π" />
             </div>
             <!-- Hint display for Pi -->
             <div class="alert alert-primary text-muted fs-5 mb-0 d-none" id="piHint"></div>
@@ -56,6 +56,8 @@
             <div id="feedback" class="form-text fs-5 pt-3"></div>
             <!-- Counter for correctly entered decimals -->
             <p class="fs-5 pt-3">Correctly entered decimals: <span id="counter" class="badge bg-secondary">0</span></p>
+            <!-- Counter for error entered decimals -->
+            <p class="fs-5">Number of errors: <span id="errorCounter" class="badge bg-danger">0</span></p>
         </div>
     </div>
 </div>
@@ -79,6 +81,15 @@
     // Store the PI decimals for validation
     const PI_DECIMALS = "1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679";
 
+    // List of keycodes to ignore
+    const ignoredKeyCodes = [16]; // 16 is the keycode for SHIFT
+
+    // Initialize error count
+    let errorCount = 0;
+
+    // Keeps the previous value of the input
+    let lastValidInput = "";
+
     /**
      * Check if the entered PI decimals are correct.
      */
@@ -87,6 +98,7 @@
         const feedbackElem = document.getElementById('feedback');
         const counterElem = document.getElementById('counter');
         const piHintElem = document.getElementById('piHint');
+        const errorCounterElem = document.getElementById('errorCounter');
 
         const inputVal = inputElem.value;
 
@@ -97,6 +109,7 @@
 
         // Validate the input against PI decimals
         if (PI_DECIMALS.substring(0, inputVal.length) === inputVal) {
+            lastValidInput = inputVal; // Update the last valid entry
             counterElem.textContent = inputVal.length;
 
             // Adjust classes for valid input
@@ -113,7 +126,11 @@
             if (inputVal.length === PI_DECIMALS.length) {
                 feedbackElem.textContent = "Congratulations! You've entered all the provided decimals!";
             }
-        } else {
+        } else if (inputVal.length > lastValidInput.length && !isNaN(inputVal[inputVal.length - 1])) { // Check if a new DECIMAL has been entered and it's a number
+            // Increment error count
+            errorCount++;
+            errorCounterElem.textContent = errorCount; // Update the error count display
+
             // Adjust classes for invalid input
             inputElem.classList.remove("is-valid");
             inputElem.classList.add("is-invalid");
@@ -144,6 +161,20 @@
     window.onload = function() {
         document.getElementById('piInput').focus();
     };
+
+    /**
+     * Add a 'keyup' event listener to the input element with the id 'piInput'.
+     */
+    document.getElementById('piInput').addEventListener('keyup', function(event) {
+
+        // If the pressed key's code is in the 'ignoredKeyCodes' array, exit the function.
+        if (ignoredKeyCodes.includes(event.keyCode)) {
+            return;
+        }
+
+        // Call the checkPi function to validate the entered PI decimals.
+        checkPi();
+    });
 
 </script>
 
